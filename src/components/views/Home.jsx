@@ -363,7 +363,7 @@ const Home = () => {
               </a>
             </li>
             <li>
-              <a href='https://t.me/plebbit' target='_blank' rel='noopener noreferrer'>
+              <a href='https://t.me/+Hq9qsw5FH2U1OWM0' target='_blank' rel='noopener noreferrer'>
                 Telegram
               </a>
             </li>
