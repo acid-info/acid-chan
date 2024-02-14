@@ -193,21 +193,21 @@ const Home = () => {
             <AboutContent>
               <div id='content'>
                 <p>
-                  AcidChan is a serverless, adminless, decentralized alternative culture where anyone can create and own unlimited boards. All data comes from the 
-                  <a href='https://plebbit.com' target='_blank' rel='noreferrer'>
-                    Logos Stack, using Waku and Codex
+                  AcidChan is a serverless, adminless, decentralized alternative culture where anyone can create and own unlimited tabs of acid. The working technology comes in part from the 
+                  <a href='https://logos.co/technology' target='_blank' rel='noreferrer'>
+                    Logos Technology Stack
                   </a>{' '}
-                  protocols, it's all text including links from which media is embedded, shared peer-to-peer. Users do not need to register an account before participating
-                  in the community. Feel free to click on a board below that interests you and jump right in!{' '}
+                  protocols using Waku and Codex. it's all text including links from which media is embedded, shared peer-to-peer. Users do not need to register an account before participating
+                  in the community. Feel free to click on a tab below that interests you and jump right in!{' '}
                 </p>
                 <br />
-                <p>There are no global rules, each board is completely independent and its owner decides how/if it should be moderated.</p>
+                <p>There are no global rules, each tab is completely independent and its owner decides how/if it should be moderated.</p>
               </div>
             </AboutContent>
           </About>
           <BoardsBox>
             <div className='boxbar'>
-              <h2>Boards</h2>
+              <h2>Tabs</h2>
             </div>
             <div className='boxcontent'>
               <div className='column'>
@@ -226,7 +226,7 @@ const Home = () => {
                   [view all]
                 </Link>
                 <ul>
-                  {sfwList.slice(0, showAllSFWBoards ? undefined : 18).map((address, index) => (
+                  {sfwList.slice(0, showAllSFWTabs ? undefined : 18).map((address, index) => (
                     <li key={`default-${index}`}>
                       <OfflineIndicator address={address} className='disconnected' isText={true} />
                       <Link
@@ -262,7 +262,7 @@ const Home = () => {
                   </a>
                 </h3>
                 <ul>
-                  {defaultNsfwSubplebbits.length === 0 && <li style={{ color: 'black' }}>No boards yet in this list.</li>}
+                  {defaultNsfwSubplebbits.length === 0 && <li style={{ color: 'black' }}>No tabs yet in this list.</li>}
                   {defaultNsfwSubplebbits.slice(0, showAllSFWBoards ? undefined : 18).map((subplebbit, index) => (
                     <li key={`default-${index}`}>
                       <OfflineIndicator address={subplebbit.address} className='disconnected' isText={true} />
@@ -353,13 +353,13 @@ const Home = () => {
               </a>
             </li>
             <li>
-              <a href='https://github.com/plebbit/plebchan' target='_blank' rel='noopener noreferrer'>
+              <a href='https://github.com/acid-info/acid-chan' target='_blank' rel='noopener noreferrer'>
                 GitHub
               </a>
             </li>
             <li>
-              <a href='https://matrix.to/#/#plebbit:plebbitchat.org' target='_blank' rel='noopener noreferrer'>
-                Status
+              <a href='https://logos.co/manifesto' target='_blank' rel='noopener noreferrer'>
+                Logos
               </a>
             </li>
             <li>
@@ -368,12 +368,12 @@ const Home = () => {
               </a>
             </li>
             <li>
-              <a href='https://twitter.com/plebchan_eth' target='_blank' rel='noopener noreferrer'>
+              <a href='https://twitter.com/ac1d_info' target='_blank' rel='noopener noreferrer'>
                 Twitter
               </a>
             </li>
             <li>
-              <a href='https://discord.gg/E7ejphwzGW' target='_blank' rel='noopener noreferrer'>
+              <a href='https://discord.gg/SU5GY3zN' target='_blank' rel='noopener noreferrer'>
                 Discord
               </a>
             </li>
