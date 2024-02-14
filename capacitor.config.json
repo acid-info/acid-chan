@@ -1,0 +1,6 @@
+{
+  "appId": "acidchan.android",
+  "appName": "acidchan",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
