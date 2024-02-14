@@ -193,7 +193,7 @@ const Home = () => {
             <AboutContent>
               <div id='content'>
                 <p>
-                  AcidChan is a serverless, adminless, decentralized alternative culture where anyone can create and own unlimited tabs of acid. 
+                  AcidChan is a serverless, adminless, decentralized alternative culture where anyone can free their minds. 
                   We're self organized into a self-organization, We're a video game, We're a masterplan, We're an investment fund, We're a rave, We're saving the internet, 
                   We're God's little warriors, We're Lindy, We're network commandos, we're clear pilled, we're lawyered up in the court of clout.
                   The working technology comes in part from the 
