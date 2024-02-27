@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   height: 100%;
@@ -454,5 +455,17 @@ export const Footer = styled.div`
       color: blue;
       text-decoration: underline;
     }
+  }
+`;
+
+export const CustomLink = styled(Link)`
+  text-decoration: none;
+
+  color: #800 !important;
+  text-decoration: none;
+
+  :hover {
+    text-decoration: underline;
+    color: #e00 !important;
   }
 `;

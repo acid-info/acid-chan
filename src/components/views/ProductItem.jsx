@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 import { Link, useParams } from 'react-router-dom';
-import { Container, Header, Logo, AboutContent, BoardsBox, BoardsContent } from '../styled/views/Home.styled';
+import { Container, Header, Logo, AboutContent, BoardsBox, BoardsContent, CustomLink } from '../styled/views/Home.styled';
 import { TEMP_PRODUCTS_DATA } from './Shop';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
@@ -30,6 +30,7 @@ const ProductItem = () => {
               </Link>
             </Logo>
           </Header>
+          <CustomLink to='/shop'>Back to shop</CustomLink>
         </AboutContent>
         <br />
         <Categories />

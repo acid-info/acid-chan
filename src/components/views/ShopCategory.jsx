@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Container, Header, Logo, Page, Search, AboutContent, BoardsBox, BoardsContent } from '../styled/views/Home.styled';
+import { Container, Header, Logo, Page, Search, AboutContent, BoardsBox, BoardsContent, CustomLink } from '../styled/views/Home.styled';
 import { Link, useParams } from 'react-router-dom';
 import Product from '../Shop/Product';
 import Categories from '../Shop/Categories';
@@ -49,6 +49,7 @@ const Shop = () => {
           </Search>
         </Page>
         <br />
+        <CustomLink to='/shop'>Back to shop</CustomLink>
         <Categories />
         <BoardsBox>
           <div className='boxbar'>
