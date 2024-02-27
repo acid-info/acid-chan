@@ -8,6 +8,7 @@ const SidebarContainer = styled.div`
   top: 0;
   left: ${(props) => (props.isOpen ? '0' : '-260px')};
   height: 100vh;
+  background: url('assets/fade.png') center top repeat-x rgb(255, 255, 238);
   border-right: 1px solid #ddd;
   transition: left 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
