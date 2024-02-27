@@ -44,7 +44,7 @@ const Container = styled.div`
     text-decoration: none;
   }
 
-  @media (max-device-width: 640px) {
+  @media (max-width: 640px) {
     padding-top: 2em;
     padding-bottom: 3em;
 

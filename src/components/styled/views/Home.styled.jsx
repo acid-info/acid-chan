@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 export const Container = styled.div`
   height: 100%;
@@ -12,7 +12,11 @@ export const Container = styled.div`
   min-width: 750px;
   padding: 0;
 
-  @media (max-device-width: 640px) {
+  @media (max-width: 1000px) {
+    width: 90% !important;
+  }
+
+  @media (max-width: 640px) {
     min-width: 0;
     width: auto;
     padding: 10px;
@@ -420,7 +424,7 @@ export const Footer = styled.div`
     text-decoration: none;
   }
 
-  @media (max-device-width: 640px) {
+  @media (max-width: 640px) {
     padding-top: 2em;
     padding-bottom: 3em;
 
