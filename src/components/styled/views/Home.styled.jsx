@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   height: 100%;

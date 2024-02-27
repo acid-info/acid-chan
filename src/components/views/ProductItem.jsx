@@ -5,6 +5,7 @@ import { Container, Header, Logo, AboutContent, BoardsBox, BoardsContent, Custom
 import { TEMP_PRODUCTS_DATA } from './Shop';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
+import SidebarMenu from '../SidebarMenu';
 
 const Image = styled.img`
   max-width: unset !important;
@@ -21,6 +22,7 @@ const ProductItem = () => {
       <Helmet>
         <title>{name} | AcidChan</title>
       </Helmet>
+      <SidebarMenu />
       <Container>
         <AboutContent>
           <Header>

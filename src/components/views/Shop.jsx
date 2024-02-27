@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Product from '../Shop/Product';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
+import SidebarMenu from '../SidebarMenu';
 
 export const TEMP_PRODUCTS_DATA = [
   {
@@ -88,6 +89,7 @@ const Shop = () => {
       <Helmet>
         <title>Shop | AcidChan</title>
       </Helmet>
+      <SidebarMenu />
       <Container>
         <AboutContent>
           <Header>

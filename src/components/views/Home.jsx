@@ -10,6 +10,7 @@ import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import { Tooltip } from 'react-tooltip';
 import PopularThreads from '../PopularThreads';
 import FooterSection from '../FooterSection';
+import SidebarMenu from '../SidebarMenu';
 
 const Home = () => {
   const { bodyStyle, setBodyStyle, defaultSubplebbits, defaultNsfwSubplebbits, setSelectedAddress, selectedStyle, setSelectedStyle } = useGeneralStore((state) => state);
@@ -104,6 +105,7 @@ const Home = () => {
       <Helmet>
         <title>AcidChan</title>
       </Helmet>
+      <SidebarMenu />
       <Container>
         <Tooltip id='tooltip' className='tooltip' />
         <Header>

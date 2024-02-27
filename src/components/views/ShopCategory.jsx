@@ -6,6 +6,7 @@ import Product from '../Shop/Product';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
 import { TEMP_PRODUCTS_DATA } from './Shop';
+import SidebarMenu from '../SidebarMenu';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -32,6 +33,7 @@ const Shop = () => {
       <Helmet>
         <title>{capitalizeFirstLetter(category)} | AcidChan</title>
       </Helmet>
+      <SidebarMenu />
       <Container>
         <AboutContent>
           <Header>
