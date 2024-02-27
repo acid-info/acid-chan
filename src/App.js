@@ -27,6 +27,9 @@ import useInfo from './hooks/useInfo';
 import useSuccess from './hooks/useSuccess';
 import packageJson from '../package.json';
 import Shop from './components/views/Shop';
+import ProductItem from './components/views/ProductItem';
+import ShopCategory from './components/views/ShopCategory';
+
 const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
 export default function App() {
@@ -152,6 +155,8 @@ export default function App() {
       <GlobalStyle background={bodyStyle.background} color={bodyStyle.color} fontFamily={bodyStyle.fontFamily} />
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
+        <Route exact path='/shop/product/:id' element={<ProductItem />} />
+        <Route exact path='/shop/:category' element={<ShopCategory />} />
         <Route exact path='/shop' element={<Shop />} />
         <Route path={`/p/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
           <Route path='post' element={<Board />} />

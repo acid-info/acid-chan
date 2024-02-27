@@ -1,59 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useAccount, useAccountSubplebbits, useComment, useSubplebbit, useSubplebbits } from '@plebbit/plebbit-react-hooks';
+import { useAccount, useAccountSubplebbits, useSubplebbits } from '@plebbit/plebbit-react-hooks';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent, Footer } from '../styled/views/Home.styled';
-import BoardAvatar from '../BoardAvatar';
+import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent } from '../styled/views/Home.styled';
 import OfflineIndicator from '../OfflineIndicator';
 import CreateBoardModal from '../modals/CreateBoardModal';
 import useGeneralStore from '../../hooks/stores/useGeneralStore';
-import packageJson from '../../../package.json';
 import getCommentMediaInfo from '../../utils/getCommentMediaInfo';
 import { Tooltip } from 'react-tooltip';
-const { version } = packageJson;
-const commitRef = process?.env?.REACT_APP_COMMIT_REF ? ` ${process.env.REACT_APP_COMMIT_REF.slice(0, 7)}` : '';
-
-const PopularThreads = ({ commentCid }) => {
-  const comment = useComment({ commentCid });
-  const subplebbit = useSubplebbit({ subplebbitAddress: comment?.subplebbitAddress });
-  const { setSelectedAddress, setSelectedTitle } = useGeneralStore((state) => state);
-  const commentMediaInfo = getCommentMediaInfo(comment);
-
-  return (
-    <div className='board' key={`${commentCid}`}>
-      <div className='board-title' key='board-title'>
-        <span>{subplebbit.title || subplebbit.address}</span>
-      </div>
-      <div className='board-avatar-container' key='board-avatar-container'>
-        <Link
-          to={`/p/${comment?.subplebbitAddress}/c/${comment?.cid}`}
-          key='link'
-          onClick={() => {
-            setSelectedTitle(subplebbit?.title);
-            setSelectedAddress(comment?.subplebbitAddress);
-          }}
-        >
-          {commentMediaInfo?.type === 'webpage' && commentMediaInfo?.thumbnail ? (
-            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-          ) : commentMediaInfo?.type === 'image' ? (
-            <img className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-          ) : commentMediaInfo?.type === 'video' ? (
-            <video className='board-avatar' src={commentMediaInfo?.url} alt='post' />
-          ) : commentMediaInfo?.type === 'iframe' && commentMediaInfo?.thumbnail ? (
-            <img className='board-avatar' src={commentMediaInfo?.thumbnail} alt='post' />
-          ) : (
-            <BoardAvatar address={comment.subplebbitAddress} />
-          )}
-        </Link>
-        <OfflineIndicator address={comment?.subplebbitAddress} className='offline-indicator' tooltipPlace='top' key='oi2' />
-      </div>
-      <div className='board-text' key='bt'>
-        {comment?.title ? <b>{comment?.title}</b> : null}
-        {comment?.content ? (comment.content.length > 99 ? `: ${comment.content.substring(0, 99)}...` : `: ${comment.content}`) : null}
-      </div>
-    </div>
-  );
-};
+import PopularThreads from '../PopularThreads';
+import FooterSection from '../FooterSection';
 
 const Home = () => {
   const { bodyStyle, setBodyStyle, defaultSubplebbits, defaultNsfwSubplebbits, setSelectedAddress, selectedStyle, setSelectedStyle } = useGeneralStore((state) => state);
@@ -337,61 +293,7 @@ const Home = () => {
             </BoardsContent>
           </BoardsBox>
         </Page>
-        <Footer>
-          <ul>
-            <li className='fill'></li>
-            <li className='first'>
-              <a href='/#/shop' rel='noopener noreferrer'>
-                Shop
-              </a>
-            </li>
-            <li>
-              <a href='https://gitcoin.co/grants/5515/plebbit-a-serverless-adminless-decentralized-redd' target='_blank' rel='noopener noreferrer'>
-                Donate
-              </a>
-            </li>
-            <li>
-              <a href='https://github.com/plebbit/whitepaper/discussions/2' target='_blank' rel='noopener noreferrer'>
-                Whitepaper
-              </a>
-            </li>
-            <li>
-              <a href='https://github.com/acid-info/acid-chan' target='_blank' rel='noopener noreferrer'>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href='https://logos.co/manifesto' target='_blank' rel='noopener noreferrer'>
-                Logos
-              </a>
-            </li>
-            <li>
-              <a href='https://t.me/+Hq9qsw5FH2U1OWM0' target='_blank' rel='noopener noreferrer'>
-                Telegram
-              </a>
-            </li>
-            <li>
-              <a href='https://twitter.com/ac1d_info' target='_blank' rel='noopener noreferrer'>
-                Twitter
-              </a>
-            </li>
-            <li>
-              <a href='https://discord.gg/SU5GY3zN' target='_blank' rel='noopener noreferrer'>
-                Discord
-              </a>
-            </li>
-          </ul>
-        </Footer>
-        <div
-          style={{
-            textAlign: 'center',
-            fontSize: '11px',
-            marginBottom: '2em',
-          }}
-        >
-          AcidChan v{version}
-          {commitRef}. GPL-2.0
-        </div>
+        <FooterSection />
       </Container>
     </>
   );
