@@ -29,6 +29,9 @@ import packageJson from '../package.json';
 import Shop from './components/views/Shop';
 import ProductItem from './components/views/ProductItem';
 import ShopCategory from './components/views/ShopCategory';
+import SignIn from './components/views/SignIn';
+import SignUp from './components/views/SignUp';
+import SignInAuth from './components/views/SignInAuth';
 
 const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
@@ -155,6 +158,9 @@ export default function App() {
       <GlobalStyle background={bodyStyle.background} color={bodyStyle.color} fontFamily={bodyStyle.fontFamily} />
       <Routes>
         <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
+        <Route exact path='/sign-in' element={<SignIn />} />
+        <Route exact path='/sign-up' element={<SignUp />} />
+        <Route exact path='/auth/:id' element={<SignInAuth />} />
         <Route exact path='/shop/product/:id' element={<ProductItem />} />
         <Route exact path='/shop/:category' element={<ShopCategory />} />
         <Route exact path='/shop' element={<Shop />} />

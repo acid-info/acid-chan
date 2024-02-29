@@ -11,6 +11,7 @@
     "@capacitor/android": "3.6.0",
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.6.0",
+    "@chec/commerce.js": "^2.8.0",
     "@plebbit/plebbit-react-hooks": "https://github.com/plebbit/plebbit-react-hooks.git#4d667f7ad7a77cfd416184acffd6f561761ebc9b",
     "@testing-library/dom": "9.0.1",
     "@testing-library/jest-dom": "5.14.1",
