@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Header, Logo, AboutContent } from '../styled/views/Home.styled';
+import { Header, Logo, AboutContent, CustomLink } from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import { Container, Form, Input, Button } from '../styled/Auth.styled';
 import { useNavigate } from 'react-router-dom';
@@ -68,6 +68,9 @@ const SignIn = () => {
           <Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required />
           {/* <Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required /> */}
           <Button type='submit'>Sign In</Button>
+          <div>
+            <span style={{ color: 'black' }}>or</span> <CustomLink to='/sign-up'>Sign Up</CustomLink>
+          </div>
         </Form>
       </Container>
     </>

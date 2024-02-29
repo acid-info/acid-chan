@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Header, Logo, AboutContent } from '../styled/views/Home.styled';
+import { Header, Logo, AboutContent, CustomLink } from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import { Container, Form, Input, Button } from '../styled/Auth.styled';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [done, setDone] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +28,15 @@ const SignUp = () => {
         body: JSON.stringify({ email }),
       }).then((response) => response.json());
 
-      console.log('Signup Successful', response);
+      const emailUrl = new URL('https://api.chec.io/v1/customers/email-token');
+
+      await fetch(emailUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ email, base_url: base_url + '/#/auth' }),
+      }).then((response) => response.json());
+
+      setDone(true);
     } catch (error) {
       console.error('Signup Failed', error);
     }
@@ -49,8 +58,12 @@ const SignUp = () => {
           <Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required />
           {/* <Input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} required /> */}
           <Button type='submit'>Sign Up</Button>
+          <div>
+            <span style={{ color: 'black' }}>or</span> <CustomLink to='/sign-in'>Sign In</CustomLink>
+          </div>
         </Form>
       </Container>
+      {done && <p style={{ textAlign: 'center', marginTop: '40px' }}>Check your email for a link to sign in</p>}
     </>
   );
 };

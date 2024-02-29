@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { Header, Logo, AboutContent } from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SignInAuth = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!id) return;
@@ -24,8 +26,14 @@ const SignInAuth = () => {
           body: JSON.stringify({ token: id }),
         }).then((response) => response.json());
 
-        console.log('Successful', response);
         const { customer_id, jwt } = response;
+
+        console.log('customer_id', customer_id);
+        console.log('jwt', jwt);
+        localStorage.setItem('customer_id', customer_id);
+        localStorage.setItem('jwt', jwt);
+
+        navigate('/shop');
       } catch (error) {
         console.error('Failed', error);
       }
