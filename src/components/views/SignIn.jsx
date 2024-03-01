@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [done, setDone] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -47,6 +49,7 @@ const SignIn = () => {
       }).then((response) => response.json());
 
       console.log('Signup Successful', response);
+      setDone(true);
     } catch (error) {
       console.error('Signin Failed', error);
     }
@@ -73,6 +76,7 @@ const SignIn = () => {
           </div>
         </Form>
       </Container>
+      {done && <p style={{ textAlign: 'center', marginTop: '40px' }}>Check your email for a link to sign in</p>}
     </>
   );
 };
