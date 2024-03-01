@@ -157,9 +157,9 @@ export default function App() {
       </Helmet>
       <GlobalStyle background={bodyStyle.background} color={bodyStyle.color} fontFamily={bodyStyle.fontFamily} />
       <Routes>
-        <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route exact path='/sign-in' element={<SignIn />} />
         <Route exact path='/sign-up' element={<SignUp />} />
+        <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
         <Route exact path='/auth/:id' element={<SignInAuth />} />
         <Route exact path='/shop/product/:id' element={<ProductItem />} />
         <Route exact path='/shop/:category' element={<ShopCategory />} />
