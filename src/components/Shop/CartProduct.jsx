@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { getCart, removeItemFromCart, updateItemInCart } from '../../common/shop/cart';
 import { useSetRecoilState } from 'recoil';
 import cartCountState from '../../atoms/shop/cartCountState';
+import { toast } from 'react-toastify';
 
 const ItemRow = styled.div`
   display: flex;
   padding: 10px;
   align-items: center;
-  border-bottom: 1px solid #ccc;
 `;
 
 const PriceRow = styled.div`
@@ -59,11 +59,23 @@ const CartProduct = (props) => {
     e.preventDefault();
     await removeItemFromCart(cartInfo?.id, line_item_id);
 
-    const newCartInfo = await getCart(cart.id);
-    setCartInfo(newCartInfo);
-    setCartCount(newCartInfo?.line_items?.length || 0);
+    toast('Removed the Item', {
+      position: 'top-center',
+      hideProgressBar: true,
+      closeOnClick: false,
+      draggable: false,
+      progress: undefined,
+    });
 
-    alert('Item removed from cart');
+    if (cart) {
+      const newCartInfo = await getCart(cart?.id);
+      setCartInfo(newCartInfo);
+      setCartCount(newCartInfo?.line_items?.length || 0);
+    } else {
+      const newCartInfo = await getCart(localStorage.getItem('cartId'));
+      setCartInfo(newCartInfo);
+      setCartCount(newCartInfo?.line_items?.length || 0);
+    }
   };
 
   const handleQuantityChange = async (e, line_item_id) => {

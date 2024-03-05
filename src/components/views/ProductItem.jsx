@@ -5,13 +5,14 @@ import { Container, Header, Logo, AboutContent, BoardsBox, BoardsContent, Custom
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
 import SidebarMenu from '../SidebarMenu';
-import { useEffect, useState } from 'react';
-import { createCart, addItemToCart } from '../../common/shop/cart';
+import { useEffect, useState, useRef } from 'react';
+import { getCart, createCart, addItemToCart } from '../../common/shop/cart';
 import CartButton from '../CartButton';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import cartCountState from '../../atoms/shop/cartCountState';
 import cartState from '../../atoms/shop/cartState';
 import { getProduct } from '../../common/shop/products';
+import { toast } from 'react-toastify';
 
 const Image = styled.img`
   max-width: unset !important;
@@ -29,47 +30,69 @@ const ProductItem = () => {
   const { id: productId } = useParams();
   const [cart, setCart] = useRecoilState(cartState);
   const [quantity, setQuantity] = useState(1);
+
   const setCartCount = useSetRecoilState(cartCountState);
   const [product, setProduct] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const productLoaded = useRef(false);
+  const cartLoaded = useRef(false);
 
   useEffect(() => {
+    if (cartLoaded.current) return;
+    cartLoaded.current = true;
+
     const handleCart = async () => {
-      const cart = await createCart();
-      setCart(cart);
-      localStorage.setItem('cartId', cart.id);
+      const localCartId = localStorage.getItem('cartId');
+
+      if (localCartId?.length) {
+        const cart = await getCart(localCartId);
+        setCart(cart);
+      } else {
+        const cart = await createCart();
+        setCart(cart);
+        localStorage.setItem('cartId', cart.id);
+      }
     };
     handleCart();
-  }, []);
+  }, [cartLoaded]);
 
   useEffect(() => {
     if (!productId) return;
 
-    const fetchProduct = async () => {
-      try {
-        const res = await getProduct(productId);
-        setLoading(false);
-        console.log('res:', res);
-        setProduct(res);
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProduct();
-  }, [productId]);
+    if (!productLoaded.current) {
+      productLoaded.current = true;
+
+      const fetchProduct = async () => {
+        try {
+          const res = await getProduct(productId);
+          setLoading(false);
+          setProduct(res);
+        } catch (error) {
+          console.error('Error:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchProduct();
+    }
+  }, [productId, productLoaded]);
 
   const handlePurchase = async () => {
     const items = await addItemToCart(cart?.id, {
-      id: 'prod_8XO3wp77QNlYAz',
+      id: productId,
       quantity: quantity,
     });
 
     setCartCount(items?.line_items?.length || 0);
 
-    alert('Item added to cart');
+    toast('Added the Item', {
+      position: 'top-center',
+      hideProgressBar: true,
+      closeOnClick: false,
+      draggable: false,
+      progress: undefined,
+    });
   };
 
   const handleQuantityChange = (e) => {
