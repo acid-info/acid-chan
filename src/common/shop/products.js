@@ -15,10 +15,6 @@ export async function getProducts() {
       headers: headers,
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
     const data = await response.json();
     return data;
   } catch (error) {
@@ -41,10 +37,6 @@ export async function getProduct(productId) {
       method: 'GET',
       headers: headers,
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
 
     const data = await response.json();
     return data;

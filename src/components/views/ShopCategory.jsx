@@ -19,7 +19,7 @@ function capitalizeFirstLetter(string) {
 //   return stringWithoutHyphens.charAt(0).toUpperCase() + stringWithoutHyphens.slice(1);
 // }
 
-const Shop = () => {
+const ShopCategory = () => {
   const { category } = useParams();
   const inputRef = useRef(null);
   const [keyword, setKeyword] = useState('');
@@ -94,4 +94,4 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+export default ShopCategory;

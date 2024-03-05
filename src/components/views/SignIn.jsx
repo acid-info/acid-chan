@@ -48,7 +48,7 @@ const SignIn = () => {
         body: JSON.stringify({ email, base_url: base_url + '/#/auth' }),
       }).then((response) => response.json());
 
-      console.log('Signup Successful', response);
+      localStorage.setItem('email', response?.email);
       setDone(true);
     } catch (error) {
       console.error('Signin Failed', error);

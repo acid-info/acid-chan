@@ -42,10 +42,6 @@ export async function getCart(cartId) {
       headers: headers,
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
     const data = await response.json();
     return data;
   } catch (error) {
@@ -70,10 +66,6 @@ export async function addItemToCart(cartId, body) {
       body: JSON.stringify(body),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
     const data = await response.json();
     return data;
   } catch (error) {
@@ -96,10 +88,6 @@ export async function removeItemFromCart(cartId, line_item_id) {
       method: 'DELETE',
       headers: headers,
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
 
     const data = await response.json();
     return data;
@@ -124,10 +112,6 @@ export async function updateItemInCart(cartId, line_item_id, body) {
       headers: headers,
       body: JSON.stringify(body),
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
 
     const data = await response.json();
     return data;

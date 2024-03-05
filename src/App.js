@@ -34,6 +34,7 @@ import SignIn from './components/views/SignIn';
 import SignUp from './components/views/SignUp';
 import SignInAuth from './components/views/SignInAuth';
 import Cart from './components/views/Cart';
+import ShopOrders from './components/views/ShopOrders';
 
 const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
@@ -167,6 +168,7 @@ export default function App() {
           <Route exact path='/auth/:id' element={<SignInAuth />} />
           <Route exact path='/shop/product/:id' element={<ProductItem />} />
           <Route exact path='/shop/:category' element={<ShopCategory />} />
+          <Route exact path='/shop/orders' element={<ShopOrders />} />
           <Route exact path='/shop' element={<Shop />} />
           <Route path={`/p/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
             <Route path='post' element={<Board />} />

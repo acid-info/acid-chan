@@ -1,6 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent, LoadingContainer } from '../styled/views/Home.styled';
+import {
+  Container,
+  Header,
+  Logo,
+  Page,
+  Search,
+  About,
+  AboutTitle,
+  AboutContent,
+  BoardsBox,
+  BoardsContent,
+  LoadingContainer,
+  CustomLink,
+} from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import Product from '../Shop/Product';
 import Categories from '../Shop/Categories';
@@ -16,6 +29,8 @@ const Shop = () => {
   const [keyword, setKeyword] = useState('');
   const [products, setProducts] = useRecoilState(productsState);
   const [loading, setLoading] = useState(true);
+
+  const customerEmail = localStorage.getItem('email') ?? '';
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -84,6 +99,8 @@ const Shop = () => {
           </About>
         </Page>
         <br />
+        {customerEmail?.length ? <CustomLink to='/shop/orders'>My Orders</CustomLink> : null}
+
         <Categories />
         <BoardsBox>
           <div className='boxbar'>
