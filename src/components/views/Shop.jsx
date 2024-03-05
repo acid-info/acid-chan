@@ -1,89 +1,43 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent } from '../styled/views/Home.styled';
+import { Container, Header, Logo, Page, Search, About, AboutTitle, AboutContent, BoardsBox, BoardsContent, LoadingContainer } from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import Product from '../Shop/Product';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
 import SidebarMenu from '../SidebarMenu';
 import CartButton from '../CartButton';
-
-export const TEMP_PRODUCTS_DATA = [
-  {
-    id: 1,
-    category: 't-shirts',
-    name: 'Acid Tshirt 1',
-    price: 10,
-    src: '/shop/A3.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    id: 2,
-    category: 't-shirts',
-    name: 'Acid Tshirt 2',
-    price: 20,
-    src: '/shop/A4.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    id: 3,
-    category: 't-shirts',
-    name: 'Acid Tshirt 3',
-    price: 30,
-    src: '/shop/A3.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    id: 4,
-    category: 't-shirts',
-    name: 'Acid Tshirt 4',
-    price: 40,
-    src: '/shop/A4.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    id: 5,
-    category: 't-shirts',
-    name: 'Acid Tshirt 5',
-    price: 50,
-    src: '/shop/A3.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    id: 6,
-    category: 't-shirts',
-    name: 'Acid Tshirt 6',
-    price: 60,
-    src: '/shop/A4.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-  {
-    id: 7,
-    category: 't-shirts',
-    name: 'Acid Tshirt 7',
-    price: 70,
-    src: '/shop/A3.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.n',
-  },
-  {
-    id: 8,
-    category: 't-shirts',
-    name: 'Acid Tshirt 8',
-    price: 80,
-    src: '/shop/A4.gif',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  },
-];
+import { useRecoilState } from 'recoil';
+import productsState from '../../atoms/shop/productsState';
+import { getProducts } from '../../common/shop/products';
 
 const Shop = () => {
   const inputRef = useRef(null);
   const [keyword, setKeyword] = useState('');
+  const [products, setProducts] = useRecoilState(productsState);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await getProducts();
+        console.log('res:', res);
+        setLoading(false);
+        setProducts(res?.data);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const handleSearchSubmit = () => {
     setKeyword(inputRef.current.value);
   };
 
-  const items = TEMP_PRODUCTS_DATA.filter((product) => product.name.toLowerCase().includes(keyword.toLowerCase()));
+  const items = products.filter((product) => product.name.toLowerCase().includes(keyword.toLowerCase()));
 
   return (
     <>
@@ -135,7 +89,15 @@ const Shop = () => {
           <div className='boxbar'>
             <h2>Products</h2>
           </div>
-          <BoardsContent>{items?.length ? items?.map((product) => <Product key={product.id} product={product} />) : <h2>No products found</h2>}</BoardsContent>
+          <BoardsContent>
+            {loading ? (
+              <LoadingContainer>Loading..</LoadingContainer>
+            ) : items?.length ? (
+              items?.map((product) => <Product key={product.id} product={product} />)
+            ) : (
+              <h2>No products found</h2>
+            )}
+          </BoardsContent>
         </BoardsBox>
         <br />
         <BoardsBox>
@@ -143,9 +105,7 @@ const Shop = () => {
             <h2>Featured</h2>
           </div>
           <BoardsContent>
-            {TEMP_PRODUCTS_DATA.slice(0, 4).map((product) => (
-              <Product key={product.id} product={product} />
-            ))}
+            {loading ? <LoadingContainer>Loading..</LoadingContainer> : items.slice(0, 4).map((product) => <Product key={product.id} product={product} />)}
           </BoardsContent>
         </BoardsBox>
         <br />

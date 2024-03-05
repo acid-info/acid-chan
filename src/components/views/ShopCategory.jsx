@@ -1,12 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Container, Header, Logo, Page, Search, AboutContent, BoardsBox, BoardsContent, CustomLink } from '../styled/views/Home.styled';
+import { Container, Header, Logo, Page, Search, AboutContent, BoardsBox, BoardsContent, CustomLink, LoadingContainer } from '../styled/views/Home.styled';
 import { Link, useParams } from 'react-router-dom';
 import Product from '../Shop/Product';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
-import { TEMP_PRODUCTS_DATA } from './Shop';
 import SidebarMenu from '../SidebarMenu';
+import { useRecoilState } from 'recoil';
+import productsState from '../../atoms/shop/productsState';
+import { getProducts } from '../../common/shop/products';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -21,12 +23,30 @@ const Shop = () => {
   const { category } = useParams();
   const inputRef = useRef(null);
   const [keyword, setKeyword] = useState('');
+  const [products, setProducts] = useRecoilState(productsState);
+  const [loading, setLoading] = useState(true);
 
   const handleSearchSubmit = () => {
     setKeyword(inputRef.current.value);
   };
 
-  const items = TEMP_PRODUCTS_DATA.filter((item) => item.category === category).filter((product) => product.name.toLowerCase().includes(keyword.toLowerCase()));
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await getProducts();
+        console.log('res:', res);
+        setLoading(false);
+        setProducts(res?.data);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const items = products.filter((item) => item.categories[0]?.slug === category).filter((product) => product.name.toLowerCase().includes(keyword.toLowerCase()));
 
   return (
     <>
@@ -57,7 +77,15 @@ const Shop = () => {
           <div className='boxbar'>
             <h2>{capitalizeFirstLetter(category)} </h2>
           </div>
-          <BoardsContent>{items?.length ? items.map((product) => <Product key={product.id} product={product} />) : <h2>No products found</h2>}</BoardsContent>
+          <BoardsContent>
+            {loading ? (
+              <LoadingContainer>Loading..</LoadingContainer>
+            ) : items?.length ? (
+              items.map((product) => <Product key={product.id} product={product} />)
+            ) : (
+              <h2>No products found</h2>
+            )}
+          </BoardsContent>
         </BoardsBox>
         <br />
         <FooterSection />

@@ -473,3 +473,9 @@ export const CustomLink = styled(Link)`
     color: #e00 !important;
   }
 `;
+
+export const LoadingContainer = styled.div`
+  min-height: 200px;
+  font-size: 20px;
+  padding: 20px;
+`;
