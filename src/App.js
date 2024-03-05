@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import 'react-tooltip/dist/react-tooltip.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { RecoilRoot } from 'recoil';
 import useGeneralStore from './hooks/stores/useGeneralStore';
 import { GlobalStyle } from './components/styled/GlobalStyle.styled';
 import { Toast } from './components/styled/Toast.styled';
@@ -32,6 +33,7 @@ import ShopCategory from './components/views/ShopCategory';
 import SignIn from './components/views/SignIn';
 import SignUp from './components/views/SignUp';
 import SignInAuth from './components/views/SignInAuth';
+import Cart from './components/views/Cart';
 
 const commitRef = process?.env?.REACT_APP_COMMIT_REF || '';
 
@@ -156,49 +158,52 @@ export default function App() {
         <meta name='theme-color' content='#ffffff' />
       </Helmet>
       <GlobalStyle background={bodyStyle.background} color={bodyStyle.color} fontFamily={bodyStyle.fontFamily} />
-      <Routes>
-        <Route exact path='/sign-in' element={<SignIn />} />
-        <Route exact path='/sign-up' element={<SignUp />} />
-        <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
-        <Route exact path='/auth/:id' element={<SignInAuth />} />
-        <Route exact path='/shop/product/:id' element={<ProductItem />} />
-        <Route exact path='/shop/:category' element={<ShopCategory />} />
-        <Route exact path='/shop' element={<Shop />} />
-        <Route path={`/p/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
-          <Route path='post' element={<Board />} />
-          <Route path='settings' element={<Board />} />
-        </Route>
-        <Route path={`/p/:subplebbitAddress/c/:threadCid`} element={<Thread setBodyStyle={setBodyStyle} />}>
-          <Route path='post' element={<Thread />} />
-          <Route path='settings' element={<Thread />} />
-        </Route>
-        <Route path={`/p/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} />}>
-          <Route path='post' element={<Catalog />} />
-          <Route path='settings' element={<Catalog />} />
-        </Route>
-        <Route path={`/p/:subplebbitAddress/description`} element={<Description setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<Description />} />
-        </Route>
-        <Route path={`/p/:subplebbitAddress/rules`} element={<Rules setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<Rules />} />
-        </Route>
-        <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<Pending />} />
-        </Route>
-        <Route path={`/p/subscriptions`} element={<Subscriptions setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<Subscriptions />} />
-        </Route>
-        <Route path={`p/subscriptions/catalog`} element={<SubscriptionsCatalog setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<SubscriptionsCatalog />} />
-        </Route>
-        <Route path={`p/all`} element={<All setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<All />} />
-        </Route>
-        <Route path={`p/all/catalog`} element={<AllCatalog setBodyStyle={setBodyStyle} />}>
-          <Route path='settings' element={<AllCatalog />} />
-        </Route>
-        <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
-      </Routes>
+      <RecoilRoot>
+        <Routes>
+          <Route exact path='/sign-in' element={<SignIn />} />
+          <Route exact path='/sign-up' element={<SignUp />} />
+          <Route exact path='/cart' element={<Cart />} />
+          <Route exact path='/' element={<Home setBodyStyle={setBodyStyle} />} />
+          <Route exact path='/auth/:id' element={<SignInAuth />} />
+          <Route exact path='/shop/product/:id' element={<ProductItem />} />
+          <Route exact path='/shop/:category' element={<ShopCategory />} />
+          <Route exact path='/shop' element={<Shop />} />
+          <Route path={`/p/:subplebbitAddress`} element={<Board setBodyStyle={setBodyStyle} />}>
+            <Route path='post' element={<Board />} />
+            <Route path='settings' element={<Board />} />
+          </Route>
+          <Route path={`/p/:subplebbitAddress/c/:threadCid`} element={<Thread setBodyStyle={setBodyStyle} />}>
+            <Route path='post' element={<Thread />} />
+            <Route path='settings' element={<Thread />} />
+          </Route>
+          <Route path={`/p/:subplebbitAddress/catalog`} element={<Catalog setBodyStyle={setBodyStyle} />}>
+            <Route path='post' element={<Catalog />} />
+            <Route path='settings' element={<Catalog />} />
+          </Route>
+          <Route path={`/p/:subplebbitAddress/description`} element={<Description setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<Description />} />
+          </Route>
+          <Route path={`/p/:subplebbitAddress/rules`} element={<Rules setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<Rules />} />
+          </Route>
+          <Route path={`/profile/c/:index`} element={<Pending setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<Pending />} />
+          </Route>
+          <Route path={`/p/subscriptions`} element={<Subscriptions setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<Subscriptions />} />
+          </Route>
+          <Route path={`p/subscriptions/catalog`} element={<SubscriptionsCatalog setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<SubscriptionsCatalog />} />
+          </Route>
+          <Route path={`p/all`} element={<All setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<All />} />
+          </Route>
+          <Route path={`p/all/catalog`} element={<AllCatalog setBodyStyle={setBodyStyle} />}>
+            <Route path='settings' element={<AllCatalog />} />
+          </Route>
+          <Route path='*' element={<NotFound setBodyStyle={setBodyStyle} />} />
+        </Routes>
+      </RecoilRoot>
       <Toast />
       <CaptchaModal selectedStyle={selectedStyle} isOpen={isCaptchaOpen} closeModal={() => setIsCaptchaOpen(false)} />
     </div>

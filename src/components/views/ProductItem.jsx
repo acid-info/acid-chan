@@ -8,6 +8,10 @@ import FooterSection from '../FooterSection';
 import SidebarMenu from '../SidebarMenu';
 import { useEffect, useState } from 'react';
 import { createCart, addItemToCart } from '../../common/shop/cart';
+import CartButton from '../CartButton';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import cartCountState from '../../atoms/shop/cartCountState';
+import cartState from '../../atoms/shop/cartState';
 
 const Image = styled.img`
   max-width: unset !important;
@@ -18,22 +22,26 @@ const Image = styled.img`
 const ProductItem = () => {
   const { id: productId } = useParams();
   const { name, price, src, description } = TEMP_PRODUCTS_DATA.find((product) => String(product.id) === String(productId));
-  const [cartId, setCartId] = useState('');
+  const [cart, setCart] = useRecoilState(cartState);
   const [quantity, setQuantity] = useState(1);
+  const setRecoilState = useSetRecoilState(cartCountState);
 
   useEffect(() => {
-    const getCartId = async () => {
+    const handleCart = async () => {
       const cart = await createCart();
-      setCartId(cart?.id);
+      setCart(cart);
+      localStorage.setItem('cartId', cart.id);
     };
-    getCartId();
+    handleCart();
   }, []);
 
   const handlePurchase = async () => {
-    await addItemToCart(cartId, {
+    await addItemToCart(cart?.id, {
       id: 'prod_8XO3wp77QNlYAz',
       quantity: quantity,
     });
+
+    setRecoilState(Number(quantity));
 
     alert('Item added to cart');
   };
@@ -48,6 +56,7 @@ const ProductItem = () => {
         <title>{name} | AcidChan</title>
       </Helmet>
       <SidebarMenu />
+      <CartButton />
       <Container>
         <AboutContent>
           <Header>
