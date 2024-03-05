@@ -1,11 +1,11 @@
 const token = 'sk_test_56290c1603cc68a61b59eb003647fdb91940a2cdc5b31';
 
-export async function getOrders(email) {
+export async function getOrders(customerId) {
   try {
     const url = new URL(`https://api.chec.io/v1/orders`);
 
     // const params = {
-    //   query: `cart_id=cart_ypbroEWYe7l8n4`,
+    //   query: customerId,
     // };
 
     // Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Header, Logo, AboutContent, BoardsBox, BoardsContent, CustomLink, LoadingContainer } from '../styled/views/Home.styled';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Categories from '../Shop/Categories';
 import FooterSection from '../FooterSection';
 import SidebarMenu from '../SidebarMenu';
@@ -32,6 +32,7 @@ const ShopOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const loaded = useRef(false);
+  const customerId = localStorage.getItem('customer_id');
 
   useEffect(() => {
     if (loaded.current) return;
@@ -39,8 +40,7 @@ const ShopOrders = () => {
 
     const fetchOrders = async () => {
       try {
-        const email = localStorage.getItem('email') ?? '';
-        const res = await getOrders(email);
+        const res = await getOrders(customerId);
 
         console.log('res:', res);
         setLoading(false);
@@ -77,41 +77,43 @@ const ShopOrders = () => {
           <BoardsContent>
             {loading ? (
               <LoadingContainer>Loading..</LoadingContainer>
-            ) : orders?.length ? (
-              orders.map((order) => (
-                <OrderItem>
-                  <OrderInfo>
-                    <p>Date</p>
-                    <p>{new Date(order?.created * 1000).toLocaleString()}</p>
-                  </OrderInfo>
-                  <OrderInfo>
-                    <p>Order Value</p>
-                    <p>{order?.order_value?.formatted_with_code}</p>
-                  </OrderInfo>
-                  <OrderInfo>
-                    <p>Status</p>
-                    <p>{order?.status_payment}</p>
-                  </OrderInfo>
-                  <OrderInfo>
-                    <p>Shipping Address</p>
-                    <p>
-                      {order?.shipping?.name +
-                        ' ' +
-                        order?.shipping?.street +
-                        ' ' +
-                        order?.shipping?.street_2 +
-                        ' ' +
-                        order?.shipping?.town_city +
-                        ' ' +
-                        order?.shipping?.postal_zip_code +
-                        ' ' +
-                        order?.shipping?.county_state +
-                        ' ' +
-                        order?.shipping?.country}
-                    </p>
-                  </OrderInfo>
-                </OrderItem>
-              ))
+            ) : orders?.filter((order) => order?.customer?.id === customerId)?.length ? (
+              orders
+                ?.filter((order) => order?.customer?.id === customerId)
+                ?.map((order) => (
+                  <OrderItem>
+                    <OrderInfo>
+                      <p>Date</p>
+                      <p>{new Date(order?.created * 1000).toLocaleString()}</p>
+                    </OrderInfo>
+                    <OrderInfo>
+                      <p>Order Value</p>
+                      <p>{order?.order_value?.formatted_with_code}</p>
+                    </OrderInfo>
+                    <OrderInfo>
+                      <p>Status</p>
+                      <p>{order?.status_payment}</p>
+                    </OrderInfo>
+                    <OrderInfo>
+                      <p>Shipping Address</p>
+                      <p>
+                        {order?.shipping?.name +
+                          ' ' +
+                          order?.shipping?.street +
+                          ' ' +
+                          order?.shipping?.street_2 +
+                          ' ' +
+                          order?.shipping?.town_city +
+                          ' ' +
+                          order?.shipping?.postal_zip_code +
+                          ' ' +
+                          order?.shipping?.county_state +
+                          ' ' +
+                          order?.shipping?.country}
+                      </p>
+                    </OrderInfo>
+                  </OrderItem>
+                ))
             ) : (
               <h2>No orders found</h2>
             )}
