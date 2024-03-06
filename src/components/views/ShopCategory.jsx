@@ -9,6 +9,7 @@ import SidebarMenu from '../SidebarMenu';
 import { useRecoilState } from 'recoil';
 import productsState from '../../atoms/shop/productsState';
 import { getProducts } from '../../common/shop/products';
+import SocialMedia from '../Shop/SocialMedia';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -34,7 +35,7 @@ const ShopCategory = () => {
     const fetchProducts = async () => {
       try {
         const res = await getProducts();
-        console.log('res:', res);
+
         setLoading(false);
         setProducts(res?.data);
       } catch (error) {
@@ -88,6 +89,7 @@ const ShopCategory = () => {
           </BoardsContent>
         </BoardsBox>
         <br />
+        <SocialMedia message={'What a lovely t-shirt!'} />
         <FooterSection />
       </Container>
     </>

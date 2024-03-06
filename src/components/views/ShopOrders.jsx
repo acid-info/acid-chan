@@ -42,7 +42,6 @@ const ShopOrders = () => {
       try {
         const res = await getOrders(customerId);
 
-        console.log('res:', res);
         setLoading(false);
         setOrders(res?.data);
       } catch (error) {

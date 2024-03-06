@@ -23,6 +23,7 @@ import CartButton from '../CartButton';
 import { useRecoilState } from 'recoil';
 import productsState from '../../atoms/shop/productsState';
 import { getProducts } from '../../common/shop/products';
+import SocialMedia from '../Shop/SocialMedia';
 
 const Shop = () => {
   const inputRef = useRef(null);
@@ -36,7 +37,7 @@ const Shop = () => {
     const fetchProducts = async () => {
       try {
         const res = await getProducts();
-        console.log('res:', res);
+
         setLoading(false);
         setProducts(res?.data);
       } catch (error) {
@@ -126,6 +127,7 @@ const Shop = () => {
           </BoardsContent>
         </BoardsBox>
         <br />
+        <SocialMedia message={'What a lovely Webshop!'} />
         <FooterSection />
       </Container>
     </>

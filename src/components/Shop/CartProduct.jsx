@@ -10,6 +10,11 @@ const ItemRow = styled.div`
   display: flex;
   padding: 10px;
   align-items: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
 
 const PriceRow = styled.div`
@@ -29,6 +34,10 @@ const RemoveButton = styled.button`
   padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    margin-left: unset;
+  }
 `;
 
 const QuantityInput = styled.input`
@@ -62,8 +71,6 @@ const CartProduct = (props) => {
     toast('Removed the Item', {
       position: 'top-center',
       hideProgressBar: true,
-      closeOnClick: false,
-      draggable: false,
       progress: undefined,
     });
 

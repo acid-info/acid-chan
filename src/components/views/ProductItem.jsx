@@ -13,6 +13,7 @@ import cartCountState from '../../atoms/shop/cartCountState';
 import cartState from '../../atoms/shop/cartState';
 import { getProduct } from '../../common/shop/products';
 import { toast } from 'react-toastify';
+import SocialMedia from '../Shop/SocialMedia';
 
 const Image = styled.img`
   max-width: unset !important;
@@ -89,8 +90,6 @@ const ProductItem = () => {
     toast('Added the Item', {
       position: 'top-center',
       hideProgressBar: true,
-      closeOnClick: false,
-      draggable: false,
       progress: undefined,
     });
   };
@@ -98,6 +97,8 @@ const ProductItem = () => {
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
+
+  const shareUrl = window.location.href;
 
   return (
     <>
@@ -142,8 +143,7 @@ const ProductItem = () => {
                 <div>
                   <button onClick={handlePurchase}>Add to Cart</button>
                 </div>
-                <br />
-                <br />
+                <SocialMedia message={'What a lovely t-shirt!'} />
               </BoardsContent>
             </div>
           </BoardsBox>
