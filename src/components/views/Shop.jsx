@@ -13,6 +13,9 @@ import {
   BoardsContent,
   LoadingContainer,
   CustomLink,
+  SearchContainer,
+  AutocompleteList,
+  ListItem,
 } from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import Product from '../Shop/Product';
@@ -27,11 +30,16 @@ import SocialMedia from '../Shop/SocialMedia';
 
 const Shop = () => {
   const inputRef = useRef(null);
-  const [keyword, setKeyword] = useState('');
   const [products, setProducts] = useRecoilState(productsState);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+
   const customerEmail = localStorage.getItem('email') ?? '';
+
+  const [sortType, setSortType] = useState('asc');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,6 +48,8 @@ const Shop = () => {
 
         setLoading(false);
         setProducts(res?.data);
+
+        setItems(res?.data);
       } catch (error) {
         console.error('Error:', error);
       } finally {
@@ -49,11 +59,45 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
-  const handleSearchSubmit = () => {
-    setKeyword(inputRef.current.value);
+  const handleSearchSubmit = (keyword) => {
+    if (!keyword?.length) {
+      setItems(products);
+    } else {
+      const filteredProducts = products.filter((product) => product.name.toLowerCase().includes(keyword.toLowerCase()));
+      setItems(filteredProducts);
+    }
+    setSuggestions([]);
   };
 
-  const items = products.filter((product) => product.name.toLowerCase().includes(keyword.toLowerCase()));
+  const onTextChanged = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.length > 0) {
+      const regex = new RegExp(`^${value}`, 'i');
+      setSuggestions(products.filter((product) => regex.test(product.name)));
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const suggestionSelected = (value) => {
+    handleSearchSubmit(value);
+    setSearchTerm(value);
+    setSuggestions([]);
+  };
+
+  const handleSort = () => {
+    if (sortType === 'asc') {
+      setSortType('desc');
+      const sortedItems = [...items].sort((a, b) => (a.name < b.name ? 1 : -1));
+      setItems(sortedItems);
+    } else {
+      setSortType('asc');
+      const sortedItems = [...items].sort((a, b) => (a.name > b.name ? 1 : -1));
+      setItems(sortedItems);
+    }
+  };
 
   return (
     <>
@@ -74,9 +118,21 @@ const Shop = () => {
         </AboutContent>
         <Page>
           <Search>
-            <input type='text' placeholder='Search products..' ref={inputRef} />
-            <input type='submit' value='Search' onClick={handleSearchSubmit} />
+            <SearchContainer>
+              <input type='text' placeholder='Search products..' value={searchTerm} ref={inputRef} onChange={onTextChanged} />
+              {suggestions.length > 0 && (
+                <AutocompleteList>
+                  {suggestions.map((item) => (
+                    <ListItem key={item.id} onClick={() => suggestionSelected(item.name)}>
+                      {item.name}
+                    </ListItem>
+                  ))}
+                </AutocompleteList>
+              )}
+            </SearchContainer>
+            <input type='submit' value='Search' onClick={() => handleSearchSubmit(searchTerm)} />
           </Search>
+
           <About>
             <AboutTitle>
               <h2>AcidChan Webshop</h2>
@@ -107,6 +163,8 @@ const Shop = () => {
           <div className='boxbar'>
             <h2>Products</h2>
           </div>
+          <button onClick={handleSort}>Sort: {sortType === 'asc' ? 'ASC' : 'DESC'}</button>
+          <br />
           <BoardsContent>
             {loading ? (
               <LoadingContainer>Loading..</LoadingContainer>
@@ -123,7 +181,7 @@ const Shop = () => {
             <h2>Featured</h2>
           </div>
           <BoardsContent>
-            {loading ? <LoadingContainer>Loading..</LoadingContainer> : items.slice(0, 4).map((product) => <Product key={product.id} product={product} />)}
+            {loading ? <LoadingContainer>Loading..</LoadingContainer> : products.slice(0, 4).map((product) => <Product key={product.id} product={product} />)}
           </BoardsContent>
         </BoardsBox>
         <br />

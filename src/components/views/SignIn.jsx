@@ -3,6 +3,7 @@ import { Header, Logo, AboutContent, CustomLink } from '../styled/views/Home.sty
 import { Link } from 'react-router-dom';
 import { Container, Form, Input, Button } from '../styled/Auth.styled';
 import { useNavigate } from 'react-router-dom';
+import SidebarMenu from '../SidebarMenu';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -57,6 +58,7 @@ const SignIn = () => {
 
   return (
     <>
+      <SidebarMenu />
       <AboutContent>
         <Header>
           <Logo>

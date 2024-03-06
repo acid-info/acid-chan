@@ -46,16 +46,17 @@ export const Logo = styled.div`
 `;
 
 export const Search = styled.div`
+  display: flex;
+  justify-content: center;
   text-align: center;
   margin-bottom: 20px;
 
   input[type='text'] {
     width: 400px;
     height: 30px;
-    font-size: 18px;
+    font-size: 16px;
     padding: 3px 10px;
     box-sizing: border-box;
-    -webkit-appearance: none;
     -webkit-border-radius: 0;
     border-radius: 0;
     margin: 0;
@@ -94,9 +95,9 @@ export const Search = styled.div`
     text-align: center;
 
     input[type='text'] {
-      width: 80%;
+      width: 220px;
       height: 35px;
-      font-size: 20px;
+      font-size: 14px;
       padding: 5px;
       box-sizing: border-box;
       border-radius: 0;
@@ -478,4 +479,30 @@ export const LoadingContainer = styled.div`
   min-height: 200px;
   font-size: 20px;
   padding: 20px;
+`;
+
+export const SearchContainer = styled.div`
+  position: relative;
+  width: fit-content;
+`;
+
+export const AutocompleteList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  z-index: 1000;
+  width: calc(100% - 4px);
+  background: white;
+  border: 1px solid #ddd;
+`;
+
+export const ListItem = styled.li`
+  padding: 10px;
+  text-align: left;
+
+  cursor: pointer;
+  &:hover {
+    background-color: #eee;
+  }
 `;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header, Logo, AboutContent, CustomLink } from '../styled/views/Home.styled';
 import { Link } from 'react-router-dom';
 import { Container, Form, Input, Button } from '../styled/Auth.styled';
+import SidebarMenu from '../SidebarMenu';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Attempting to Sign In', { email, password });
+
     const base_url = window.location.origin;
 
     try {
@@ -44,6 +45,7 @@ const SignUp = () => {
 
   return (
     <>
+      <SidebarMenu />
       <AboutContent>
         <Header>
           <Logo>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CustomLink } from './styled/views/Home.styled';
+import { useResetRecoilState } from 'recoil';
+import cartState from '../atoms/shop/cartState';
+import cartCountState from '../atoms/shop/cartCountState';
+import productsState from '../atoms/shop/productsState';
 
 const SidebarContainer = styled.div`
   width: 250px;
@@ -33,9 +37,27 @@ const ToggleButton = styled.button`
 
 function SidebarMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const customer_id = localStorage.getItem('customer_id');
+  const resetCart = useResetRecoilState(cartState);
+  const resetCartCount = useResetRecoilState(cartCountState);
+  const resetProduct = useResetRecoilState(productsState);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem('customer_id');
+    localStorage.removeItem('cartId');
+    localStorage.removeItem('login_token');
+    localStorage.removeItem('email');
+    localStorage.removeItem('jwt');
+
+    resetCart();
+    resetCartCount();
+    resetProduct();
+
+    window.location.reload();
   };
 
   return (
@@ -50,6 +72,13 @@ function SidebarMenu() {
         <CustomLink to='/shop'>
           <MenuItem>Shop</MenuItem>
         </CustomLink>
+        {customer_id?.length > 0 ? (
+          <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+        ) : (
+          <CustomLink to='/sign-in'>
+            <MenuItem>Sign In</MenuItem>
+          </CustomLink>
+        )}
       </SidebarContainer>
     </>
   );
