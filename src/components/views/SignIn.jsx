@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Form, Input, Button } from '../styled/Auth.styled';
 import { useNavigate } from 'react-router-dom';
 import SidebarMenu from '../SidebarMenu';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -49,10 +50,15 @@ const SignIn = () => {
         body: JSON.stringify({ email, base_url: base_url + '/#/auth' }),
       }).then((response) => response.json());
 
+      if (response?.error) {
+        throw new Error(response?.error?.message);
+      }
+
       localStorage.setItem('email', response?.email);
       setDone(true);
     } catch (error) {
       console.error('Signin Failed', error);
+      toast.error('Commerce.js backend has an issue');
     }
   };
 

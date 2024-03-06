@@ -3,6 +3,7 @@ import { Header, Logo, AboutContent, CustomLink } from '../styled/views/Home.sty
 import { Link } from 'react-router-dom';
 import { Container, Form, Input, Button } from '../styled/Auth.styled';
 import SidebarMenu from '../SidebarMenu';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -37,9 +38,14 @@ const SignUp = () => {
         body: JSON.stringify({ email, base_url: base_url + '/#/auth' }),
       }).then((response) => response.json());
 
+      if (response?.error) {
+        throw new Error(response?.error?.message);
+      }
+
       setDone(true);
     } catch (error) {
       console.error('Signup Failed', error);
+      toast.error('Commerce.js backend has an issue');
     }
   };
 
