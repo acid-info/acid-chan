@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [done, setDone] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -16,20 +15,6 @@ const SignUp = () => {
     const base_url = window.location.origin;
 
     try {
-      const url = new URL('https://api.chec.io/v1/customers');
-
-      const headers = {
-        'X-Authorization': 'sk_test_56290c1603cc68a61b59eb003647fdb91940a2cdc5b31',
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      };
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({ email }),
-      }).then((response) => response.json());
-
       const emailUrl = new URL('https://api.chec.io/v1/customers/email-token');
 
       await fetch(emailUrl, {
