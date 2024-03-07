@@ -98,9 +98,6 @@ const ProductItem = () => {
     setQuantity(e.target.value);
   };
 
-<<<<<<< HEAD
-  const shareUrl = window.location.href;
-=======
   const handleFavorites = () => {
     const favorites = localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [];
 
@@ -109,8 +106,6 @@ const ProductItem = () => {
       toast('Already in favorites', {
         position: 'top-center',
         hideProgressBar: true,
-        closeOnClick: false,
-        draggable: false,
         progress: undefined,
       });
       return;
@@ -121,12 +116,9 @@ const ProductItem = () => {
     toast('Added to favorites', {
       position: 'top-center',
       hideProgressBar: true,
-      closeOnClick: false,
-      draggable: false,
       progress: undefined,
     });
   };
->>>>>>> 53fa0f4 (feat: add favorites)
 
   return (
     <>
