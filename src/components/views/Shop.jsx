@@ -37,7 +37,7 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
-  const customerEmail = localStorage.getItem('email') ?? '';
+  const customerId = localStorage.getItem('customer_id') ?? '';
 
   const [sortType, setSortType] = useState('asc');
 
@@ -156,7 +156,12 @@ const Shop = () => {
           </About>
         </Page>
         <br />
-        {customerEmail?.length ? <CustomLink to='/shop/orders'>My Orders</CustomLink> : null}
+        {customerId?.length ? <CustomLink to='/shop/orders'>My Orders</CustomLink> : null}
+        {customerId?.length ? (
+          <CustomLink style={{ marginLeft: '20px' }} to='/shop/favorites'>
+            Favorites
+          </CustomLink>
+        ) : null}
 
         <Categories />
         <BoardsBox>

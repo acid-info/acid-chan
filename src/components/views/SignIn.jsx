@@ -15,27 +15,10 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Attempting to Sign In', { email, password });
+    console.log('Attempting to Sign In', { email });
     const base_url = window.location.origin;
 
     try {
-      // const url = new URL('https://api.chec.io/v1/customers/exchange-token');
-
-      // const headers = {
-      //   'X-Authorization': 'sk_test_56290c1603cc68a61b59eb003647fdb91940a2cdc5b31',
-      //   'Content-Type': 'application/json',
-      //   Accept: 'application/json',
-      // };
-
-      // const response = await fetch(url, {
-      //   method: 'POST',
-      //   headers: headers,
-      //   body: JSON.stringify({ token: 'fasfa' }),
-      // }).then((response) => response.json());
-
-      // console.log('Signin Successful', response);
-      // // navigate('/shop');
-
       const url = new URL('https://api.chec.io/v1/customers/email-token');
 
       const headers = {

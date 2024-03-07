@@ -98,7 +98,35 @@ const ProductItem = () => {
     setQuantity(e.target.value);
   };
 
+<<<<<<< HEAD
   const shareUrl = window.location.href;
+=======
+  const handleFavorites = () => {
+    const favorites = localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [];
+
+    const findExisting = favorites.find((item) => item.id === productId);
+    if (findExisting) {
+      toast('Already in favorites', {
+        position: 'top-center',
+        hideProgressBar: true,
+        closeOnClick: false,
+        draggable: false,
+        progress: undefined,
+      });
+      return;
+    }
+
+    favorites.push({ id: productId, name: product?.name, image: product?.image?.url, price: product?.price?.raw });
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    toast('Added to favorites', {
+      position: 'top-center',
+      hideProgressBar: true,
+      closeOnClick: false,
+      draggable: false,
+      progress: undefined,
+    });
+  };
+>>>>>>> 53fa0f4 (feat: add favorites)
 
   return (
     <>
@@ -144,11 +172,18 @@ const ProductItem = () => {
                   <button onClick={handlePurchase}>Add to Cart</button>
                 </div>
                 <SocialMedia message={'What a lovely t-shirt!'} />
+                <br />
+                <div>
+                  <button onClick={handleFavorites}>Add to Favorites</button>
+                </div>
+                <br />
+                <br />
               </BoardsContent>
             </div>
           </BoardsBox>
         )}
-        <br /> <br />
+        <br />
+        <br />
         <FooterSection />
       </Container>
     </>
